@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <VBox spacing="10" stylesheets="@application.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BibleReaderController">
     <padding>
@@ -22,7 +23,15 @@
         <Label text="Chapter:" />
         <ComboBox fx:id="chapterSelector" prefWidth="100" />
         <Button onAction="#resetProgress" text="Reset Progress" />
+        <Button onAction="#addBookmark" text="Add Bookmark" />
+        <Button onAction="#viewBookmarks" text="View Bookmarks" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Made By: Bahu Pwet" wrappingWidth="194.22265625" />
     </HBox>
     
     <TextArea fx:id="verseDisplay" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
+    
+    <HBox spacing="10" alignment="CENTER">
+        <Button onAction="#previousChapter" text="Previous Chapter" />
+        <Button onAction="#nextChapter" text="Next Chapter" />
+    </HBox>
 </VBox>
