@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class BibleReaderApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        // Load FXML with proper path
+        // To load the FXML file and set up the scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("BibleReader.fxml"));
         Parent root = loader.load();
         

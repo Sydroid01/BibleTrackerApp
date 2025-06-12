@@ -98,7 +98,8 @@ public class BibleReaderController {
             for (int i = 1; i <= chapterCount; i++) {
                 chapterSelector.getItems().add(i);
             }
-            chapterSelector.getSelectionModel().select(chapter);
+            chapterSelector.getSelectionModel().select(chapter - 1);
+
             displayChapterDirectly(book, chapter);
         });
     }
@@ -162,11 +163,12 @@ public class BibleReaderController {
     private void updateSelection(String book, int chapter) {
         if (!book.equals(bookSelector.getValue())) {
             bookSelector.getSelectionModel().select(book);
-            Platform.runLater(() -> chapterSelector.getSelectionModel().select(chapter));
+            Platform.runLater(() -> chapterSelector.getSelectionModel().select(chapter - 1));
         } else {
-            chapterSelector.getSelectionModel().select(chapter);
+            chapterSelector.getSelectionModel().select(chapter - 1);
         }
     }
+
 
     @FXML
     private void addBookmark() {
