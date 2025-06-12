@@ -26,11 +26,11 @@
         <Button onAction="#addBookmark" text="Add Bookmark" />
         <Button onAction="#viewBookmarks" text="View Bookmarks" />
     </HBox>
-   <Label prefHeight="34.0" prefWidth="678.0" text="Label">
-      <font>
-         <Font name="System Bold" size="20.0" />
-      </font>
-   </Label>
+   <Label fx:id="currentBookChapterLabel" prefHeight="34.0" prefWidth="678.0" text="">
+    <font>
+        <Font name="System Bold" size="20.0" />
+    </font>
+</Label>
     
     <TextArea fx:id="verseDisplay" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
     

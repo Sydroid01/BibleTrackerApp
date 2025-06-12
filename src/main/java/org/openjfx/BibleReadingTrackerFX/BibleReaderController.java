@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import javafx.scene.control.Label;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,6 +25,7 @@ public class BibleReaderController {
     @FXML private ComboBox<String> bookSelector;
     @FXML private ComboBox<Integer> chapterSelector;
     @FXML private TextArea verseDisplay;
+    @FXML private Label currentBookChapterLabel;
 
     private final Map<String, List<Element>> bookChapterMap = new LinkedHashMap<>();
     private final File progressFile = new File("progress.properties");
@@ -52,7 +54,7 @@ public class BibleReaderController {
                     chapterList.add((Element) chapters.item(j));
                 }
 
-                String bookLabel = "Book " + bookNum;
+                String bookLabel = " " + bookNum;
                 bookChapterMap.put(bookLabel, chapterList);
             }
 
@@ -117,7 +119,7 @@ public class BibleReaderController {
                        .append(verse.getTextContent().trim())
                        .append("\n\n");
             }
-            
+            currentBookChapterLabel.setText(book + " - Chapter " + chapter);
             verseDisplay.setText(content.toString());
             saveProgress();
         } catch (Exception e) {
@@ -306,6 +308,7 @@ public class BibleReaderController {
                     chapterSelector.getItems().clear();
                     verseDisplay.clear();
                     showAlert("Progress Reset", "Your reading progress has been reset.");
+                    currentBookChapterLabel.setText("");
                 } else {
                     showAlert("Error", "Failed to reset progress.");
                 }
