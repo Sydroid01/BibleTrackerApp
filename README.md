@@ -1,5 +1,5 @@
 # BibleTrackerFX
-(SCHOOL PROJECT) Bible Tracker App made with java and javafx;
+(SCHOOL PROJECT) Bible Tracker App made with java, javafx and Maven;
 
 # Materials Used for This Project
 ## Tools:
