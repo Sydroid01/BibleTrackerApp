@@ -9,12 +9,11 @@ import javafx.stage.Stage;
 public class BibleReaderApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        // To load the FXML file and set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BibleReader.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();
         
-        Scene scene = new Scene(root, 800, 700);
-        stage.setTitle("Bible Reader");
+        Scene scene = new Scene(root, 400, 300);
+        stage.setTitle("Bible Reader - Login");
         stage.setScene(scene);
         stage.show();
     }

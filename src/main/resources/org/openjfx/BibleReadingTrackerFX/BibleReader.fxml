@@ -25,6 +25,7 @@
         <Button onAction="#resetProgress" text="Reset Progress" />
         <Button onAction="#addBookmark" text="Add Bookmark" />
         <Button onAction="#viewBookmarks" text="View Bookmarks" />
+        <Button onAction="#deleteUser" text="Delete User" style="-fx-background-color: #ff5555; -fx-text-fill: white;" />
     </HBox>
    <Label fx:id="currentBookChapterLabel" prefHeight="34.0" prefWidth="678.0" text="">
     <font>

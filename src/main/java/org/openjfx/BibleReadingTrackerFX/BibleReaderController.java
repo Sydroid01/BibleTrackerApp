@@ -2,6 +2,9 @@ package org.openjfx.BibleReadingTrackerFX;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -9,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,9 +32,21 @@ public class BibleReaderController {
     @FXML private Label currentBookChapterLabel;
 
     private final Map<String, List<Element>> bookChapterMap = new LinkedHashMap<>();
-    private final File progressFile = new File("progress.properties");
-    private final File bookmarksFile = new File("bookmarks.properties");
+    private String currentUser = null;
+    private File progressFile;
+    private File bookmarksFile;
 
+    public void setUser(String username) {
+        this.currentUser = username;
+        File userDir = new File("users/" + username);
+        if (!userDir.exists()) {
+            userDir.mkdirs();
+        }
+        progressFile = new File(userDir, "progress.properties");
+        bookmarksFile = new File(userDir, "bookmarks.properties");
+        loadProgress();
+    }
+    
     @FXML
     public void initialize() {
         try {
@@ -74,21 +90,26 @@ public class BibleReaderController {
                 }
             });
 
-            // Load saved progress
-            if (progressFile.exists()) {
-                Properties props = new Properties();
-                try (FileInputStream in = new FileInputStream(progressFile)) {
-                    props.load(in);
-                    String book = props.getProperty("book");
-                    String chapter = props.getProperty("chapter");
-                    if (book != null && chapter != null) {
-                        safeBookmarkNavigation(book, Integer.parseInt(chapter));
-                    }
-                }
-            }
         } catch (Exception e) {
             verseDisplay.setText("Error initializing: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+    
+    private void loadProgress() {
+        if (progressFile != null && progressFile.exists()) {
+            Properties props = new Properties();
+            try (FileInputStream in = new FileInputStream(progressFile)) {
+                props.load(in);
+                String book = props.getProperty("book");
+                String chapter = props.getProperty("chapter");
+                if (book != null && chapter != null) {
+                    safeBookmarkNavigation(book, Integer.parseInt(chapter));
+                }
+            } catch (Exception e) {
+                verseDisplay.setText("Error loading progress: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -324,5 +345,81 @@ public class BibleReaderController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    @FXML
+    private void deleteUser() {
+        if (currentUser == null) {
+            showAlert("Error", "No user is currently logged in.");
+            return;
+        }
+
+        // Confirmation dialog
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Delete User Account");
+        confirmAlert.setHeaderText("Delete User Account?");
+        confirmAlert.setContentText("Are you absolutely sure you want to delete your account?\n\n" +
+                "This will permanently delete:\n" +
+                "• All your reading progress\n" +
+                "• All your bookmarks\n" +
+                "• Your account credentials\n\n" +
+                "This action cannot be undone!");
+
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // Delete user directory
+                File userDir = new File("users/" + currentUser);
+                if (userDir.exists()) {
+                    deleteDirectory(userDir);
+                }
+                
+                // Delete credentials file
+                File credentialsFile = new File("users/" + currentUser + ".properties");
+                if (credentialsFile.exists() && !credentialsFile.delete()) {
+                    throw new IOException("Failed to delete credentials file");
+                }
+                
+                // Return to login screen
+                returnToLoginScreen();
+                
+                showAlert("Account Deleted", "Your account has been successfully deleted.");
+            } catch (IOException e) {
+                showAlert("Error", "Failed to delete user account: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void deleteDirectory(File directory) throws IOException {
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteDirectory(file);
+                    } else {
+                        if (!file.delete()) {
+                            throw new IOException("Failed to delete file: " + file.getAbsolutePath());
+                        }
+                    }
+                }
+            }
+            if (!directory.delete()) {
+                throw new IOException("Failed to delete directory: " + directory.getAbsolutePath());
+            }
+        }
+    }
+    
+    private void returnToLoginScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+            
+            Stage stage = (Stage) bookSelector.getScene().getWindow();
+            stage.setScene(new Scene(root, 400, 300));
+            stage.setTitle("Bible Reader - Login");
+        } catch (IOException e) {
+            showAlert("Error", "Failed to return to login screen: " + e.getMessage());
+        }
     }
 }
