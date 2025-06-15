@@ -12,7 +12,7 @@ public class BibleReaderApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();
         
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root);
         stage.setTitle("Bible Reader - Login");
         stage.setScene(scene);
         stage.show();

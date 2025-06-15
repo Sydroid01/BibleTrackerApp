@@ -5,31 +5,45 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.BibleReadingTrackerFX.LoginController">
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20"/>
-    </padding>
-    
-    <Label text="Bible Reader Login">
-        <font>
-            <Font name="System Bold" size="20.0" />
-        </font>
-    </Label>
-    
-    <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    </GridPane>
-    
-    <HBox spacing="10" alignment="CENTER">
-        <Button fx:id="loginButton" text="Login" defaultButton="true"/>
-        <Button fx:id="registerButton" text="Register"/>
-    </HBox>
+<VBox alignment="CENTER" prefHeight="319.0" prefWidth="444.0" spacing="20" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.BibleReadingTrackerFX.LoginController">
+   <padding>
+      <Insets bottom="20" left="20" right="20" top="20" />
+   </padding>
+   <children>
+      <Label text="Bible Reader Tracker">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
+      <GridPane alignment="CENTER" hgap="10" vgap="10">
+         <children>
+            <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <HBox alignment="CENTER" prefWidth="411.0" spacing="10">
+         <children>
+            <Button fx:id="loginButton" defaultButton="true" text="Login" />
+            <Button fx:id="registerButton" text="Register" />
+         </children>
+      </HBox>
+      <Label text="Enter " />
+   </children>
 </VBox>

@@ -44,7 +44,7 @@ public class LoginController {
                 controller.setUser(username);
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.setScene(new Scene(root, 800, 700));
+                stage.setScene(new Scene(root, 1280, 700));
                 stage.setTitle("Bible Reader - " + username);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -46,8 +46,8 @@ public class BibleReaderController {
     private File progressFile;
     private File bookmarksFile;
     private Set<String> readChapters = new HashSet<>();
-    private static final int TOTAL_CHAPTERS = 1189; // Total chapters in the Bible
-    private static final int TOTAL_BOOKS = 66; // Total books in the Bible
+    private static final int TOTAL_CHAPTERS = 1189; // Total chapters of bible (ESV) :P
+    private static final int TOTAL_BOOKS = 66; // Total books in the Bible (ESV) ;)
     private File progressDataFile;
     
     private void saveReadingData() {
@@ -69,13 +69,13 @@ public class BibleReaderController {
             Properties props = new Properties();
             try (FileInputStream in = new FileInputStream(progressDataFile)) {
                 props.load(in);
-                // Load read chapters
+                // read chapters
                 String readChaptersStr = props.getProperty("readChapters", "");
                 if (!readChaptersStr.isEmpty()) {
                     readChapters = new HashSet<>(Arrays.asList(readChaptersStr.split(",")));
                 }
                 
-                // Load last read date
+                // last read date
                 String lastRead = props.getProperty("lastRead");
                 if (lastRead != null) {
                     lastReadLabel.setText("Last Read: " + lastRead);
@@ -87,20 +87,20 @@ public class BibleReaderController {
     }
     
     private void updateProgressUI() {
-        // Update overall progress
+        // Update overall progress :)
         int chaptersRead = readChapters.size();
         double overallProgress = (double) chaptersRead / TOTAL_CHAPTERS;
         overallProgressBar.setProgress(overallProgress);
         overallProgressLabel.setText(String.format("%.1f%% (%d/%d chapters)", 
             overallProgress * 100, chaptersRead, TOTAL_CHAPTERS));
         
-        // Update book progress if a book is selected
+        // Update book progress if a book is selected :3
         if (bookSelector.getValue() != null) {
             String currentBook = bookSelector.getValue();
             List<Element> chapters = bookChapterMap.get(currentBook);
             int bookChapterCount = chapters.size();
             
-            // Count read chapters in current book
+            // Count read chapters in current book :3
             int bookChaptersRead = 0;
             for (int i = 1; i <= bookChapterCount; i++) {
                 if (readChapters.contains(currentBook + "-" + i)) {
@@ -114,10 +114,10 @@ public class BibleReaderController {
                 bookProgress * 100, bookChaptersRead, bookChapterCount));
         }
         
-        // Update statistics
+        // Update progress labels :P
         chaptersReadLabel.setText("Chapters Read: " + chaptersRead);
         
-        // Count completed books - declare variable at method scope
+        // To count the number of completed books :3
         int completedBooks = 0;
         for (String book : bookChapterMap.keySet()) {
             int bookChapterCount = bookChapterMap.get(book).size();
@@ -192,7 +192,7 @@ public class BibleReaderController {
     @FXML
     public void initialize() {
         try {
-            // Load and parse XML
+            // To load the Bible XML file from resources
             InputStream is = getClass().getResourceAsStream("/EnglishESVBible.xml");
             if (is == null) throw new RuntimeException("EnglishESVBible.xml not found in resources.");
 
@@ -200,7 +200,7 @@ public class BibleReaderController {
             Document doc = builder.parse(is);
             doc.getDocumentElement().normalize();
 
-            // Populate book/chapter map
+            // To load chapters and books from the XML
             NodeList books = doc.getElementsByTagName("book");
             for (int i = 0; i < books.getLength(); i++) {
                 Element book = (Element) books.item(i);
@@ -216,7 +216,7 @@ public class BibleReaderController {
                 bookChapterMap.put(bookLabel, chapterList);
             }
 
-            // Setup UI components
+            // To initialize the UI components
             bookSelector.getItems().addAll(bookChapterMap.keySet());
             bookSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
                 if (newVal != null) {
@@ -238,6 +238,7 @@ public class BibleReaderController {
         }
     }
     
+    // To load the user's last reading progress
     private void loadProgress() {
         if (progressFile != null && progressFile.exists()) {
             Properties props = new Properties();
@@ -255,6 +256,7 @@ public class BibleReaderController {
         }
     }
 
+    // To safely navigate to a bookmarked chapter
     private void safeBookmarkNavigation(String book, int chapter) {
         Platform.runLater(() -> {
             bookSelector.getSelectionModel().select(book);
@@ -269,6 +271,7 @@ public class BibleReaderController {
         });
     }
 
+    // To display the selected chapter directly
     private void displayChapterDirectly(String book, int chapter) {
         try {
             Element chapterElement = bookChapterMap.get(book).get(chapter - 1);
@@ -295,6 +298,7 @@ public class BibleReaderController {
         }
     }
 
+    // The three methods below handle chapter navigation
     @FXML
     private void previousChapter() {
         navigateChapter(-1);
@@ -330,6 +334,7 @@ public class BibleReaderController {
         }
     }
 
+    // To update the selection in the book and chapter selectors
     private void updateSelection(String book, int chapter) {
         if (!book.equals(bookSelector.getValue())) {
             bookSelector.getSelectionModel().select(book);
@@ -339,7 +344,7 @@ public class BibleReaderController {
         }
     }
 
-
+    // To add a bookmark for the current chapter
     @FXML
     private void addBookmark() {
         String book = bookSelector.getValue();
@@ -366,6 +371,7 @@ public class BibleReaderController {
         }
     }
 
+    // To view and manage bookmarks (this incldes deleting bookmarks)
     @FXML
     private void viewBookmarks() {
         if (!bookmarksFile.exists()) {
@@ -445,6 +451,7 @@ public class BibleReaderController {
         alert.showAndWait();
     }
 
+    // To save the user's current reading progress
     private void saveProgress() {
         String book = bookSelector.getValue();
         Integer chapter = chapterSelector.getValue();
@@ -461,6 +468,7 @@ public class BibleReaderController {
         }
     }
 
+    // To reset the user's reading progress
     @FXML
     private void resetProgress() {
         if (progressFile.exists()) {
@@ -491,6 +499,7 @@ public class BibleReaderController {
         }
     }
 
+    // To show an alert dialog with a message
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -499,6 +508,7 @@ public class BibleReaderController {
         alert.showAndWait();
     }
     
+    // To delete the user's account and all associated data
     @FXML
     private void deleteUser() {
         if (currentUser == null) {
@@ -564,6 +574,7 @@ public class BibleReaderController {
         }
     }
     
+    // To delete a directory and all its contents (when user deletes their account)
     private void deleteDirectory(File directory) throws IOException {
         if (directory.exists()) {
             File[] files = directory.listFiles();
@@ -584,6 +595,7 @@ public class BibleReaderController {
         }
     }
     
+    // To return to the login screen after deleting the user account
     private void returnToLoginScreen() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
