@@ -5,5 +5,6 @@
 
 # Materials Used for This Project
 ## Tools:
-- Eclipse (IDE)
 - Beblia/Holy Bible XML Format
+- JavaFX
+- Maven
