@@ -1,0 +1,6 @@
+.text-area {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 16px;
+    -fx-control-inner-background: #f9f9f9;
+    -fx-text-fill: #222;
+}

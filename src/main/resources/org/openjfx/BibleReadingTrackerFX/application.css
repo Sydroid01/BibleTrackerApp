@@ -1,0 +1,16 @@
+.text-area {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 20px;
+    -fx-control-inner-background: #f9f9f9;
+    -fx-text-fill: #222;
+}
+
+.background{
+	-fx-background-color: #EDEADE;
+	-fx-text-fill: #000000;
+}
+
+.progressbar{
+	-fx-background-color: #4A0404;
+	-fx-text-fill: #FFFFFF;
+}

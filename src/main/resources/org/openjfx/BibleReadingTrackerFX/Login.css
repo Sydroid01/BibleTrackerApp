@@ -1,0 +1,9 @@
+.rightside {
+	-fx-background-color: #4A0404;
+}
+.leftside {
+	-fx-background-image:url(profbooks.png);
+}
+.label {
+	-fx-text-fill: #FFFFFF;
+}
