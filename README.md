@@ -1,7 +1,9 @@
 # BibleTrackerFX
-(SCHOOL PROJECT) Bible Tracker App made with java, javafx and Maven;
+- Bible Tracker App made with Java, Javafx and Maven.
+- This is for a school project my Object Oriented Programming subject.
+- Project will not be updated, since I have finished my OOP subject.
 
 # Materials Used for This Project
 ## Tools:
-* Eclipse (IDE)
-* Beblia/Holy Bible XML Format
+- Eclipse (IDE)
+- Beblia/Holy Bible XML Format
